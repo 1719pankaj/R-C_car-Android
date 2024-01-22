@@ -52,15 +52,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         sharedPreferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        SERVER_IP = getLastKnownIP()
+        binding.ipTV.setText("IP: $SERVER_IP")
 
         binding.suuuBT.setOnClickListener {
+            if (binding.UACET.text.toString().isBlank()) {
+                Toast.makeText(this, "Enter IP", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             SERVER_IP = binding.UACET.text.toString()
             setLastKnownIP(SERVER_IP)
-            binding.ipTV.setText("IP: $SERVER_IP")
-        }
-        
-        binding.lastIPBT.setOnClickListener {
-            SERVER_IP = getLastKnownIP()
             binding.ipTV.setText("IP: $SERVER_IP")
         }
 
